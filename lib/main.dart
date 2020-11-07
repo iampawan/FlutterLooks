@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutterlooks/login/login_page1.dart';
-import 'package:flutterlooks/onboarding/onboarding_page1.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'coolors.dart';

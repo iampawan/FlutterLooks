@@ -15,7 +15,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
   final pic2 =
       "https://images.unsplash.com/photo-1582050041567-9cfdd330d545?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60";
   TabController _tabController;
-
+  double anim = 1.0;
   double anim2 = 0.1;
   @override
   void initState() {
@@ -30,12 +30,22 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
         setState(() {});
       },
     );
+
+    withRepeatAnimation(
+      vsync: this,
+      isRepeatReversed: true,
+      tween: Tween(begin: 2.0, end: 3.0),
+      callBack: (animationVal, controllerVal) {
+        anim = animationVal;
+        setState(() {});
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Vx.red500,
+      backgroundColor: Vx.purple500,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -56,7 +66,9 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
                   .bgImage(DecorationImage(image: NetworkImage(pkImageUrl)))
                   .roundedFull
                   .neumorphic(
-                      color: Vx.red500, curve: VxCurve.convex, elevation: 20.0)
+                      color: Vx.purple500,
+                      curve: VxCurve.concave,
+                      elevation: 30.0)
                   .make(),
               "Hi, "
                   .richText
@@ -72,6 +84,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
               VxTextField(
                 borderType: VxTextFieldBorderType.none,
                 borderRadius: 18,
+                keyboardType: TextInputType.text,
                 fillColor: Vx.gray200.withOpacity(0.3),
                 hint: "Search",
                 contentPaddingTop: 13,
@@ -97,98 +110,71 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
             child: VxBox(
                 child: VStack([
               TabBar(
-                indicatorColor: Colors.red,
+                indicatorColor: Colors.purple,
                 indicatorSize: TabBarIndicatorSize.label,
-                labelColor: Vx.red500,
+                labelColor: Vx.purple500,
                 unselectedLabelColor: Vx.gray400,
                 labelPadding: Vx.m16,
+                isScrollable: false,
                 tabs: [
                   Icon(
                     Icons.map,
-                    size: 30,
-                  ),
+                    size: 10,
+                  ).scale(scaleValue: _tabController.index == 0 ? anim : 3.0),
                   Icon(
                     Icons.pin_drop,
-                    size: 30,
-                  ),
+                    size: 10,
+                  ).scale(scaleValue: _tabController.index == 1 ? anim : 3.0),
                   Icon(
                     Icons.restaurant,
-                    size: 30,
-                  ),
+                    size: 10,
+                  ).scale(scaleValue: _tabController.index == 2 ? anim : 3.0),
                   Icon(
                     Icons.person,
-                    size: 30,
-                  )
+                    size: 10,
+                  ).scale(scaleValue: _tabController.index == 3 ? anim : 3.0)
                 ],
                 controller: _tabController,
-              ),
+              ).h(context.percentHeight * 8),
               TabBarView(
                 controller: _tabController,
                 children: ["1", "2", "3", "4"]
-                    .map(
-                      (e) => VStack([
-                        "Discover places in London"
-                            .text
-                            .gray600
-                            .xl2
-                            .bold
-                            .make(),
-                        20.heightBox,
-                        TravelCard(
-                          imgUrl: pic1,
-                          title: "Tower Bridge",
-                          subtitle: "Southwork",
-                        ),
-                        20.heightBox,
-                        TravelCard(
-                          imgUrl: pic2,
-                          title: "London Eye",
-                          subtitle: "Country Hall",
-                        ),
-                      ]).p16(),
-                    )
+                    .map((e) => VStack([
+                          "Discover places in London"
+                              .text
+                              .gray600
+                              .xl2
+                              .bold
+                              .make(),
+                          20.heightBox,
+                          TravelCard(
+                            imgUrl: pic1,
+                            title: "Tower Bridge",
+                            subtitle: "Southwork",
+                          ),
+                          20.heightBox,
+                          TravelCard(
+                            imgUrl: pic2,
+                            title: "London Eye",
+                            subtitle: "Country Hall",
+                          ),
+                        ]).p16())
                     .toList(),
               ).expand(),
             ])).white.make(),
           ).expand(),
         ],
         axisSize: MainAxisSize.max,
-      ),
+      ).hFull(context),
     );
   }
 }
 
-class TravelCard extends StatefulWidget {
+class TravelCard extends StatelessWidget {
   final String title, subtitle, imgUrl;
 
   const TravelCard({Key key, this.title, this.subtitle, this.imgUrl})
       : super(key: key);
-
-  @override
-  _TravelCardState createState() => _TravelCardState();
-}
-
-class _TravelCardState extends State<TravelCard>
-    with SingleTickerProviderStateMixin {
-  double anim = 1.0;
-  @override
-  void initState() {
-    super.initState();
-    withRepeatAnimation(
-      vsync: this,
-      isRepeatReversed: true,
-      tween: Tween(begin: 1.0, end: 1.2),
-      callBack: (animationVal, controllerVal) {
-        anim = animationVal;
-        setState(() {});
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,14 +182,14 @@ class _TravelCardState extends State<TravelCard>
       duration: 1.seconds,
       child: HStack([
         Image.network(
-          widget.imgUrl,
+          imgUrl,
           fit: BoxFit.cover,
-        ).wh(context.percentWidth * 35, 100 * anim).cornerRadius(10 * anim),
+        ).wh(context.percentWidth * 35, 100).cornerRadius(10),
         20.widthBox,
         [
-          widget.title.text.make(),
+          title.text.semiBold.make(),
           3.heightBox,
-          widget.subtitle.text.textStyle(context.captionStyle).make(),
+          subtitle.text.textStyle(context.captionStyle).make().shimmer(),
           5.heightBox,
           [
             VxRating(
@@ -214,7 +200,7 @@ class _TravelCardState extends State<TravelCard>
             "(100)".text.xs.gray600.make(),
           ].hStack()
         ].column(crossAlignment: CrossAxisAlignment.start).expand(),
-      ]).cornerRadius(8 * anim).backgroundColor(Vx.gray200),
+      ]).cornerRadius(8).backgroundColor(Vx.gray200),
     );
   }
 }

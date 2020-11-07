@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterlooks/login/login_page1.dart';
-import 'package:flutterlooks/onboarding/onboarding_page1.dart';
+<<<<<<< HEAD
 import 'package:flutterlooks/travel/travel_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'coolors.dart';
 
 void main() {

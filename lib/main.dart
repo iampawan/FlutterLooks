@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutterlooks/travel/travel_page.dart';
+import 'package:flutterlooks/fun_ui/christmas.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'coolors.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: TravelPage(),
+      home: ChristmasTree(),
       theme: ThemeData(
         accentColor: Coolors.purplish,
         primaryColor: Coolors.orangish,

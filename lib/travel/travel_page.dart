@@ -49,6 +49,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final tabIndex = _tabController.index;
+
     return Scaffold(
       backgroundColor: Vx.purple500,
       appBar: AppBar(
@@ -70,7 +71,12 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
               .roundedFull
               .neumorphic(color: Vx.purple500, elevation: 30.0)
               .bgImage(DecorationImage(image: NetworkImage(pkImageUrl)))
-              .make(),
+              .make()
+              .onTap(() {
+            context.showLoading(
+              msg: "Your message",
+            );
+          }),
           "Hi, "
               .richText
               .withTextSpanChildren(["Pawan".textSpan.bold.make()])

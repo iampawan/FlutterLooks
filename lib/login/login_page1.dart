@@ -53,7 +53,7 @@ class LoginPage1 extends StatelessWidget {
               "Forgot password?"
                   .text
                   .sm
-                  .textStyle(context.captionStyle)
+                  .caption(context)
                   .make()
                   .objectCenterRight()
                   .p16(),

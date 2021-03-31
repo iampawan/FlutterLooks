@@ -16,10 +16,10 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
   final pic2 =
       "https://images.unsplash.com/photo-1582050041567-9cfdd330d545?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60";
 
-  TabController _tabController;
+  TabController? _tabController;
 
-  double anim = 1.0;
-  double anim2 = 1.0;
+  double? anim = 1.0;
+  double? anim2 = 1.0;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
     withAnimation(
       vsync: this,
       tween: Tween(begin: 1.0, end: 0.0),
-      callBack: (animationVal, controllerVal) {
+      callBack: (double? animationVal, controllerVal) {
         anim = animationVal;
         setState(() {});
       },
@@ -39,7 +39,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
       vsync: this,
       isRepeatReversed: true,
       tween: Tween(begin: 2.0, end: 3.0),
-      callBack: (animationVal, controllerVal) {
+      callBack: (double? animationVal, controllerVal) {
         anim2 = animationVal;
         setState(() {});
       },
@@ -48,7 +48,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final tabIndex = _tabController.index;
+    final tabIndex = _tabController!.index;
 
     return Scaffold(
       backgroundColor: Vx.purple500,
@@ -84,7 +84,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
               .xl2
               .make()
               .p8()
-              .offset(offset: Offset(-300 * anim, 0.0)),
+              .offset(offset: Offset(-300 * anim!, 0.0)),
           "Solo Traveller".text.white.make(),
           VxTextField(
             borderType: VxTextFieldBorderType.none,
@@ -162,24 +162,24 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
 }
 
 class TravelCard extends StatelessWidget {
-  final String title, subtitle, imageUrl;
+  final String? title, subtitle, imageUrl;
 
-  const TravelCard({Key key, this.title, this.subtitle, this.imageUrl})
+  const TravelCard({Key? key, this.title, this.subtitle, this.imageUrl})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return HStack([
       Image.network(
-        imageUrl,
+        imageUrl!,
         fit: BoxFit.cover,
       ).wh(context.percentWidth * 35, 100).cornerRadius(10),
       20.widthBox,
       VStack(
         [
-          title.text.semiBold.make(),
+          title!.text.semiBold.make(),
           3.heightBox,
-          subtitle.text.make().shimmer(),
+          subtitle!.text.make().shimmer(),
           5.heightBox,
           [
             VxRating(
